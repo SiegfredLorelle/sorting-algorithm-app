@@ -1,4 +1,11 @@
 class sorting_algorithm_app:
+    
+    input_keys = {
+        "sort": {1: "selection", 2: "bubble", 3: "insertion", 4: "merge"},
+        "type_of_elements": {1: "integer", 2: "letters"},
+        "sort_mode": {1: "ascending", 2: "descending", 3: "alphabetical"},
+    }
+
     def __init__(self):
         print("Sorting Algorithm Application")
         print("Programmed by: Siegfred Lorrelle C.")
@@ -20,14 +27,40 @@ class sorting_algorithm_app:
         while True:
             try:
                 num_of_elements = int(input("\nHow many elements are there on your list?  "))
+                if num_of_elements <= 0:
+                    print("Error: Number of elements must be a positive integer! Try Again!")
+                    continue
             except (TypeError, ValueError):
-                print("Number of elements must be an integer!")
+                print("Error: Number of elements must be an integer! Try Again!")
                 continue
             else:
                 break
-                
-        type_of_elements = input("Type of elements: [1] integer or [2] letters:  ")
-        sort_mode = input("Sort mode: [1] ascending, [2] descending, [3] alphabetically:  ")
+
+        while True:
+            try:
+                type_of_elements = int(input("\nType of elements: [1] integer or [2] letters:  "))
+                if type_of_elements not in self.input_keys["type_of_elements"]:
+                    print("Error: Type of elements can only be 1 (int) or 2 (letters)! Try Again!")
+                    continue
+            except (TypeError, ValueError):
+                print("Error: Type of elements can only be 1 (int) or 2 (letters)! Try Again!")
+                continue
+            else:
+                break
+
+        while True:
+            try:
+                sort_mode = int(input("\nSort mode: [1] ascending, [2] descending, [3] alphabetically:  "))
+                if sort_mode not in self.input_keys["sort_mode"]:
+                    print("Error: Sort Mode can only be 1, 2, or 3! Try Again!")
+                    continue
+            except (TypeError, ValueError):
+                print("Error: Sort Mode can only be 1, 2, or 3! Try Again!")
+                continue
+            else:
+                break
+
+        print()
         user_list = []
         for counter in range(num_of_elements):
             element = input("Enter your element:  ")
@@ -52,3 +85,8 @@ class sorting_algorithm_app:
 
 
 app = sorting_algorithm_app()
+
+
+# TODO
+# ERROR CHECK GIVEN ELEMENT, SORT CHOICE
+# SORT ITSELF
