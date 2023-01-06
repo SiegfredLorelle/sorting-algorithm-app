@@ -32,8 +32,8 @@ class sorting_algorithm_app:
             else:
                 break
 
-        list_info = self.configure_list()
-        sorted_list = self.sort(sort_choice, list_info)
+        sort_mode, user_list = self.configure_list()
+        sorted_list = self.sort(sort_choice, sort_mode, user_list)
         print(f"Final Sorted List: {sorted_list}")
 
 
@@ -89,7 +89,7 @@ class sorting_algorithm_app:
                         elif len(element) != 1:
                             print("Element with type letters must only be 1 letter! Try Again!")
                             continue
-                        element = ord(element)
+                        # element = ord(element)
                     elif self.input_keys["type_of_elements"][type_of_elements] == "integer":
                         element = int(element)
                     user_list.append(element)
@@ -99,28 +99,49 @@ class sorting_algorithm_app:
                 else:
                     break
 
-        return {"num of elements": num_of_elements,
-                 "type of elements": type_of_elements,
-                 "sort mode": sort_mode,
-                 "list": user_list}
+        return sort_mode, user_list
 
 
-    def sort(self, sort_choice, list_info):
-        if sort_choice == "1":
-            return self.selection_sort(list_info)
-        elif sort_choice == "2":
+    def sort(self, sort_choice, sort_mode, user_list):
+        if self.input_keys["sort"][sort_choice] == "selection":
+            return self.selection_sort(sort_mode, user_list)
+        elif self.input_keys["sort"][sort_choice] == "bubble":
             return self.bubble_sort(list_info)
-        elif sort_choice == "3":
+        elif self.input_keys["sort"][sort_choice] == "insertion":
             return self.insertion_sort(list_info)
-        elif sort_choice == "4":
+        elif self.input_keys["sort"][sort_choice] == "merge":
             return self.merge_sort(list_info)
+        else:
+            print("ERROR")
 
-    def selection_sort(self, list_info):
-        print()
+    def selection_sort(self, sort_mode, user_list):
+        print(f"\nUnsorted List: {user_list}")
+
+        for i in range(len(user_list) - 1):
+            element_to_swap_index = i
+            for j in range(i + 1, len(user_list)):
+                if self.input_keys["sort_mode"][sort_mode] == "ascending" and user_list[element_to_swap_index] > user_list[j]:
+                    element_to_swap_index = j
+                elif self.input_keys["sort_mode"][sort_mode] == "descending" and user_list[element_to_swap_index] < user_list[j]:
+                    element_to_swap_index = j
+            user_list[i], user_list[element_to_swap_index] = user_list[element_to_swap_index], user_list[i]
+            print(f"Pass {i+1}: {user_list}")
+            
+        return user_list
+    
+    def bubble_sort(sort_mode, user_list):
+        ...
+    
+    def insertion_sort(sort_mode, user_list):
+        ...
+    
+    def merge_sort(sort_mode, user_list):
+        ...
 
 
 app = sorting_algorithm_app()
 
 
 # TODO
-# SORT ITSELF
+# BUBBLE, INSERTION, MERGE SORT
+# TRY AGAIN OR EXIT FUNC AFTER EVERY SORT
