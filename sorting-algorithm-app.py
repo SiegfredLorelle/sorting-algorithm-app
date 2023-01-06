@@ -143,8 +143,24 @@ class sorting_algorithm_app:
         return user_list
     
     def insertion_sort(self, sort_mode, user_list):
-        ...
-    
+        print(f"\nUnsorted List: {user_list}")
+        
+        for i in range(1, len(user_list)):
+            j = i
+
+            if self.input_keys["sort_mode"][sort_mode] == "ascending":
+                while j > 0 and user_list[j] < user_list[j-1]:
+                    user_list[j], user_list[j-1] = user_list[j-1], user_list[j]
+                    j -= 1
+            elif self.input_keys["sort_mode"][sort_mode] == "descending":
+                while j > 0 and user_list[j] > user_list[j-1]:
+                    user_list[j], user_list[j-1] = user_list[j-1], user_list[j]
+                    j -= 1
+            print(f"Pass: {i}: {user_list}")
+
+        return user_list
+
+
     def merge_sort(self, sort_mode, user_list):
         ...
 
