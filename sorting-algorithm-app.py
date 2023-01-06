@@ -106,11 +106,11 @@ class sorting_algorithm_app:
         if self.input_keys["sort"][sort_choice] == "selection":
             return self.selection_sort(sort_mode, user_list)
         elif self.input_keys["sort"][sort_choice] == "bubble":
-            return self.bubble_sort(list_info)
+            return self.bubble_sort(sort_mode, user_list)
         elif self.input_keys["sort"][sort_choice] == "insertion":
-            return self.insertion_sort(list_info)
+            return self.insertion_sort(sort_mode, user_list)
         elif self.input_keys["sort"][sort_choice] == "merge":
-            return self.merge_sort(list_info)
+            return self.merge_sort(sort_mode, user_list)
         else:
             print("ERROR")
 
@@ -129,13 +129,23 @@ class sorting_algorithm_app:
             
         return user_list
     
-    def bubble_sort(sort_mode, user_list):
+    def bubble_sort(self, sort_mode, user_list):
+        print(f"\nUnsorted List: {user_list}")
+        
+        for i in range(len(user_list) - 1):
+            for j in range(0, len(user_list) - i - 1):
+                if self.input_keys["sort_mode"][sort_mode] == "ascending" and user_list[j] > user_list[j+1]:
+                    user_list[j], user_list[j+1] = user_list[j+1], user_list[j]
+                elif self.input_keys["sort_mode"][sort_mode] == "descending" and user_list[j] < user_list[j+1]:
+                    user_list[j], user_list[j+1] = user_list[j+1], user_list[j]
+            print(f"Pass {i+1}: {user_list}")
+        
+        return user_list
+    
+    def insertion_sort(self, sort_mode, user_list):
         ...
     
-    def insertion_sort(sort_mode, user_list):
-        ...
-    
-    def merge_sort(sort_mode, user_list):
+    def merge_sort(self, sort_mode, user_list):
         ...
 
 
