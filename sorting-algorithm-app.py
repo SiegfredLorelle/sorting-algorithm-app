@@ -1,9 +1,11 @@
+import string
+
 class sorting_algorithm_app:
     
     input_keys = {
         "sort": {1: "selection", 2: "bubble", 3: "insertion", 4: "merge"},
-        "type_of_elements": {1: "integer", 2: "letters"},
-        "sort_mode": {1: "ascending", 2: "descending", 3: "alphabetical"},
+        "type_of_elements": {1: "integer", 2: "letter"},
+        "sort_mode": {1: "ascending", 2: "descending"},
     }
 
     def __init__(self):
@@ -18,10 +20,22 @@ class sorting_algorithm_app:
         print("[3] Insertion Sorting")
         print("[4] Merge Sorting")
 
-        sort_choice = input("\nWhich sort to use?  ")
+        while True:
+            try:
+                sort_choice = int(input("\nWhich sort to use?  "))
+                if sort_choice not in self.input_keys["sort"]:
+                    print("Error: Accepted input are only 1, 2, 3 or 4! Try Again!")
+                    continue
+            except (TypeError, ValueError):
+                print("Error: Accepted input are only 1, 2, 3 or 4! Try Again!")
+                continue
+            else:
+                break
+
         list_info = self.configure_list()
         sorted_list = self.sort(sort_choice, list_info)
         print(f"Final Sorted List: {sorted_list}")
+
 
     def configure_list(self):
         while True:
@@ -38,7 +52,7 @@ class sorting_algorithm_app:
 
         while True:
             try:
-                type_of_elements = int(input("\nType of elements: [1] integer or [2] letters:  "))
+                type_of_elements = int(input("\nType of elements: [1] integer or [2] letter:  "))
                 if type_of_elements not in self.input_keys["type_of_elements"]:
                     print("Error: Type of elements can only be 1 (int) or 2 (letters)! Try Again!")
                     continue
@@ -50,26 +64,47 @@ class sorting_algorithm_app:
 
         while True:
             try:
-                sort_mode = int(input("\nSort mode: [1] ascending, [2] descending, [3] alphabetically:  "))
+                sort_mode = int(input("\nSort mode: [1] ascending, [2] descending:  "))
                 if sort_mode not in self.input_keys["sort_mode"]:
-                    print("Error: Sort Mode can only be 1, 2, or 3! Try Again!")
+                    print("Error: Sort Mode can only be 1 (ascending) or 2 (descending)! Try Again!")
                     continue
             except (TypeError, ValueError):
-                print("Error: Sort Mode can only be 1, 2, or 3! Try Again!")
+                print("Error: Sort Mode can only be 1 (ascending) or 2 (descending)! Try Again!")
                 continue
             else:
                 break
 
         print()
+        
         user_list = []
         for counter in range(num_of_elements):
-            element = input("Enter your element:  ")
-            user_list.append(element)
+            while True:
+                try:
+                    element = input(f"Enter your element[{counter + 1}]:  ").upper()
+
+                    if self.input_keys["type_of_elements"][type_of_elements] == "letter":
+                        if element not in string.ascii_uppercase:
+                            print("Element with type letter must be a letter (A-Z)! Try Again!")
+                            continue
+                        elif len(element) != 1:
+                            print("Element with type letters must only be 1 letter! Try Again!")
+                            continue
+                        element = ord(element)
+                    elif self.input_keys["type_of_elements"][type_of_elements] == "integer":
+                        element = int(element)
+                    user_list.append(element)
+                except (TypeError, ValueError):
+                    print("Element with type integer must be an integer! Try Again!")
+                    continue
+                else:
+                    break
+
         return {"num of elements": num_of_elements,
                  "type of elements": type_of_elements,
                  "sort mode": sort_mode,
                  "list": user_list}
-    
+
+
     def sort(self, sort_choice, list_info):
         if sort_choice == "1":
             return self.selection_sort(list_info)
@@ -88,5 +123,4 @@ app = sorting_algorithm_app()
 
 
 # TODO
-# ERROR CHECK GIVEN ELEMENT, SORT CHOICE
 # SORT ITSELF
