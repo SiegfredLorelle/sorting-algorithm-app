@@ -103,6 +103,7 @@ class sorting_algorithm_app:
 
 
     def sort(self, sort_choice, sort_mode, user_list):
+        print(f"\nUnsorted List: {user_list}")
         if self.input_keys["sort"][sort_choice] == "selection":
             return self.selection_sort(sort_mode, user_list)
         elif self.input_keys["sort"][sort_choice] == "bubble":
@@ -115,7 +116,6 @@ class sorting_algorithm_app:
             print("ERROR")
 
     def selection_sort(self, sort_mode, user_list):
-        print(f"\nUnsorted List: {user_list}")
 
         for i in range(len(user_list) - 1):
             element_to_swap_index = i
@@ -130,7 +130,6 @@ class sorting_algorithm_app:
         return user_list
     
     def bubble_sort(self, sort_mode, user_list):
-        print(f"\nUnsorted List: {user_list}")
         
         for i in range(len(user_list) - 1):
             for j in range(0, len(user_list) - i - 1):
@@ -143,7 +142,6 @@ class sorting_algorithm_app:
         return user_list
     
     def insertion_sort(self, sort_mode, user_list):
-        print(f"\nUnsorted List: {user_list}")
         
         for i in range(1, len(user_list)):
             j = i
@@ -162,12 +160,53 @@ class sorting_algorithm_app:
 
 
     def merge_sort(self, sort_mode, user_list):
-        ...
+        
+        if len(user_list) == 1:
+            return user_list
 
+        center_index = len(user_list) // 2
+        left_sublist = user_list[:center_index]
+        right_sublist = user_list[center_index:]
+
+        print(f"split => left: {left_sublist} right: {right_sublist}")
+
+        left = self.merge_sort(sort_mode, left_sublist)
+        right = self.merge_sort(sort_mode, right_sublist)
+
+        merged_list = []
+        while True:
+            if len(left) == 0 and len(right) == 0:
+                break
+            elif len(left) != 0 and len(right) == 0:
+                merged_list += left
+                left.clear()
+            elif len(left) == 0 and len(right) != 0:
+                merged_list += right
+                right.clear()
+            else:
+                if self.input_keys["sort_mode"][sort_mode] == "ascending":
+                    if left[0] < right[0]:
+                        merged_list.append(left[0])
+                        left.pop(0)
+                    else:
+                        merged_list.append(right[0])
+                        right.pop(0)
+                elif self.input_keys["sort_mode"][sort_mode] == "descending":
+                    if left[0] > right[0]:
+                        merged_list.append(left[0])
+                        left.pop(0)
+                    else:
+                        merged_list.append(right[0])
+                        right.pop(0)
+                else:
+                    print("ERROR")
+
+        print(f"merge => {merged_list}")
+        return merged_list
 
 app = sorting_algorithm_app()
 
 
 # TODO
-# BUBBLE, INSERTION, MERGE SORT
 # TRY AGAIN OR EXIT FUNC AFTER EVERY SORT
+# REMOVE EMERGENCY ERROR PRINTS
